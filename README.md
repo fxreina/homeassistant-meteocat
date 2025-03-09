@@ -29,8 +29,9 @@ La integración está todavía en desarrollo y no está lista para su uso produc
 
 Configuración:
 
+Selecciona la comarca para la que quieres recibir la previsión meteorológica:
 
-
+![imagen](assets/select_region.png)
 
 ## FAQ
 
