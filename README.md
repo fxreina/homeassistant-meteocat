@@ -20,7 +20,17 @@ La integración está todavía en desarrollo y no está lista para su uso produc
 
 ## Instalación
 
-xxx:
+1. Accede a la carpeta de config de tu home assistant.
+2. Crea la carpeta "custom_components/meteocat"
+3. Copia el contenido del repositorio en esa carpeta.
+4. Reinicia home assistant desde "Developer Tools / Yaml / Check and Restart / Restart"
+5. Accede a "Settings / Devices and Services / Integrations / Add integration.
+6. Localiza la integración de "Meteocat".
+
+Configuración:
+
+
+
 
 ## FAQ
 
