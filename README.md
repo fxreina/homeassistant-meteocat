@@ -32,8 +32,7 @@ Select the region (Comarca) for which you want to receive the weather forecast.
 [HACS](https://github.com/custom-components/hacs) is a community store for Home Assistant. Although it is planned to solve this in future, for the time being you CANNOT install yet this Meteocat integration from the HACS store.
 
 ## Quick Start
-This custom component creates:
-xxx
+This custom component creates two sensors that will deliver the weather forecast for today and tomorrow for the selected region. Each sensor will have attributes showing the max and min forecasted temperatures and the probability and intensity of precipitation splitted by morning and afternoon.
 
 ## FAQ
 
