@@ -4,7 +4,7 @@
 # homeassistant-meteocat
 <a href="https://www.meteo.cat/" target="_blank"><img src="https://brands.home-assistant.io/meteocat/logo.png" alt="imagen" height="150"></a> <img src="assets/dades_obertes.png" alt="imagen" height="150">
 
-Esta integración para Home Assistant te permite integrar la previsión meteorológica emitida por Meteocat (la agencia meteorológica local de Catalunya) a través del portal de datos abiertos de la Generalitat de Catalunya.
+Esta integración para Home Assistant te permite integrar la previsión meteorológica emitida por Meteocat (la agencia meteorológica local de Catalunya) a través del portal de datos abiertos de la Generalitat de Catalunya. Concretamente, se consulta el servicio https://static-m.meteo.cat/content/opendata/ctermini_comarcal.xml que proporciona la previsión meteorológica por comarcas para los próximos dos días (el día en curso == hoy y el siguiente == mañana).
 
 La integración está todavía en desarrollo y no está lista para su uso productivo.
 
