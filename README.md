@@ -2,7 +2,7 @@
 [![Stable](https://img.shields.io/github/v/release/fxreina/homeassistant-meteocat.svg)](https://github.com/fxreina/homeassistant-meteocat/releases/latest)
 
 # homeassistant-meteocat
-![imagen](https://brands.home-assistant.io/meteocat/logo.png)
+<a href="https://www.meteo.cat/" target="_blank"><img src="https://brands.home-assistant.io/meteocat/logo.png" alt="imagen" height="150"></a> <img src="assets/dades_obertes.png" alt="imagen" height="150">
 
 Esta integración para Home Assistant te permite integrar la previsión meteorológica emitida por Meteocat (la agencia meteorológica local de Catalunya) a través del portal de datos abiertos de la Generalitat de Catalunya.
 
