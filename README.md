@@ -34,11 +34,11 @@ Select the region (Comarca) for which you want to receive the weather forecast.
 ## Quick Start
 This custom component creates two sensors that will deliver the weather forecast for today and tomorrow for the selected region.
 
-<img src="assets/entities.png" alt="imagen" height="100">
+<img src="assets/entities.png" alt="imagen">
 
 Each sensor will have attributes showing the max and min forecasted temperatures and the probability and intensity of precipitation splitted by morning and afternoon.
 
-<img src="assets/attributes.png" alt="imagen" height="100">
+<img src="assets/attributes.png" alt="imagen">
 
 ## FAQ
 
