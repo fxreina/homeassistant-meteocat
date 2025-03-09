@@ -51,6 +51,35 @@ REGIONS = [
 # Optional: Sort the locations alphabetically by description
 REGIONS = sorted(REGIONS, key=lambda x: x[1])
 
+FORECAST_MAPPING = {
+    "1": "sol",
+    "2": "sol i núvols alts",
+    "3": "entre poc i mig ennuvolat",
+    "4": "molt cobert",
+    "5": "plugim",
+    "6": "pluja",
+    "7": "xàfec",
+    "8": "tempesta",
+    "9": "tempesta calamarsa",
+    "10": "neu",
+    "11": "boira",
+    "12": "boirina",
+    "13": "xàfec neu",
+    "20": "entre mig i molt ennuvolat",
+    "21": "cobert",
+    "22": "calitja",
+    "23": "ruixat",
+    "24": "xàfec amb tempesta",
+    "25": "xàfec",
+    "26": "ruixat",
+    "27": "neu feble",
+    "28": "tempesta neu",
+    "29": "xàfec",
+    "30": "aiguaneu",
+    "31": "ruixat",
+    "32": "plugim",
+}
+
 PRECIPITATION_MAPPING = {
     "1": "No se n'espera",
     "2": "No es descarta",

@@ -3,7 +3,7 @@
     "name": "Meteocat",
     "version": "0.0.1",
     "documentation": "https://github.com/fxreina/homeassistant-meteocat",
-    "issue_tracker": "https://www.example.com/my-custom-integration-issues",
+    "issue_tracker": "https://github.com/fxreina/homeassistant-meteocat/issues",
     "codeowners": ["@your-github-username"],
     "requirements": [],
     "dependencies": [],

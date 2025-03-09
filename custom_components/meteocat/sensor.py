@@ -1,6 +1,7 @@
 import logging
 import aiohttp
 import async_timeout
+import unicodedata
 import xml.etree.ElementTree as ET
 
 from homeassistant.components.sensor import SensorEntity
@@ -8,6 +9,9 @@ from homeassistant.components.sensor import SensorEntity
 from homeassistant.const import UnitOfTemperature
 from .const import DOMAIN
 from .const import PRECIPITATION_MAPPING
+from .const import FORECAST_MAPPING
+from .const import REGIONS  # Import the REGIONS list
+
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -28,11 +32,16 @@ class MeteocatSensor(SensorEntity):
     def __init__(self, region_id, day):
         """Initialize the sensor."""
         self._region_id = str(region_id)
-        self._day = str(day)
-       #self._name = f"Meteocat Forecast Day {day}"
+        self._day = day
+        self._day_name = "Today" if day == 1 else "Tomorrow"
+         # Get location name from REGIONS
+        location_name = next((name for id, name in REGIONS if id == self._region_id), f"Region {self._region_id}")
+         # Normalize name (remove accents, convert spaces to underscores, and lowercase)
+        self._location_name = unicodedata.normalize("NFKD", location_name).encode("ASCII", "ignore").decode("ASCII")
+         #self._location_name = self._location_name.lower().replace(" ", "_")       
         self._state = None
-        self._attr_unique_id = f"meteocat_forecast_{region_id}_day_{day}"
-        self._attr_name = f"Meteocat Forecast {region_id} Day {day}"
+        self._attr_unique_id = f"meteocat_forecast_{self._location_name.lower().replace(' ', '_')}_{self._day_name.lower()}"
+        self._attr_name = f"Meteocat Forecast {location_name} {self._day_name}"
         self._attributes = {}
 
     @property
@@ -54,7 +63,7 @@ class MeteocatSensor(SensorEntity):
     def unit_of_measurement(self):
         """Return the unit of measurement."""
 #       return TEMP_CELSIUS
-        return UnitOfTemperature.CELSIUS
+#       return UnitOfTemperature.CELSIUS
 
     async def async_update(self):
         """Fetch new state data for the sensor."""
@@ -83,28 +92,33 @@ class MeteocatSensor(SensorEntity):
             # Ensure the requested day exists
 
             if len(variables) > day_index: # Use '>' instead of '>=' to avoid off-by-one errors
-                variable = variables[day_index]  
+                variable = variables[day_index]
+                if variable is not None:
+                     # Extract weather symbols and remove ".png"
+                    morningforecast = variable.get("simbolmati", "").replace(".png", "")
+                    afternoonforecast = variable.get("simboltarda", "").replace(".png", "")
+                     # Get descriptions from FORECAST_MAPPING (default to empty string if not found)
+                    desc_morning = FORECAST_MAPPING.get(morningforecast, "").capitalize()
+                    desc_afternoon = FORECAST_MAPPING.get(afternoonforecast, "").capitalize()                    
 
-                # Map IDs to descriptive values for precipitation
-                precip_morning_id = variable.get("probprecipitaciomati")
-                precip_afternoon_id = variable.get("probprecipitaciotarda")
-                precipitation_morning = PRECIPITATION_MAPPING.get(precip_morning_id, "Unknown")
-                precipitation_afternoon = PRECIPITATION_MAPPING.get(precip_afternoon_id, "Unknown")
+                     # Set state: concatenate if different, otherwise use one
+                    self._state = desc_morning if desc_morning == desc_afternoon else f"{desc_morning} / {desc_afternoon}"
 
-                self._state = variable.get("tempmax")
-                self._attributes = {
-                    "temperature_min": variable.get("tempmin"),
-                    "temperatura_max": variable.get("tempmax"),
-                    "symbol_morning": variable.get("simbolmati"),
-                    "symbol_afternoon": variable.get("simboltarda"),
-                   #"precipitation_morning": variable.get("probprecipitaciomati"),
-                    "precipitation_morning": precipitation_morning,
-                   #"precipitation_afternoon": variable.get("probprecipitaciotarda"),
-                    "precipitation_afternoon": precipitation_afternoon,
-                    "intensity_morning": variable.get("intensitatprecimati"),
-                    "intensity_afternoon": variable.get("intensitatprecitarda"),
-                    "precipitation_accum_morning": variable.get("precipitacioacumuladamati"),
-                    "precipitation_accum_afternoon": variable.get("precipitacioacumuladatarda"),
+                     # Map IDs to descriptive values for precipitation
+                    precip_morning_id = variable.get("probprecipitaciomati")
+                    precip_afternoon_id = variable.get("probprecipitaciotarda")
+                    precipitation_morning = PRECIPITATION_MAPPING.get(precip_morning_id, "Unknown")
+                    precipitation_afternoon = PRECIPITATION_MAPPING.get(precip_afternoon_id, "Unknown")
+
+                    self._attributes = {
+                        "min_temp": variable.get("tempmin"),
+                        "max_temp": variable.get("tempmax"),
+                        "morning_precip": precipitation_morning,
+                        "morning_intensity": variable.get("intensitatprecimati"),
+                        "morning_accum": variable.get("precipitacioacumuladamati"),
+                        "afternoon_precip": precipitation_afternoon,
+                        "afternoon_intensity": variable.get("intensitatprecitarda"),
+                        "afternoon_accum": variable.get("precipitacioacumuladatarda"),
                 }
             else:
                 _LOGGER.warning("No forecast available for day %s in region %s", self._day, self._region_id)
