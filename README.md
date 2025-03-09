@@ -1,5 +1,4 @@
 ![GitHub Activity](https://img.shields.io/github/commit-activity/y/fxreina/homeassistant-meteocat.svg?label=commits)
-[![Stable](https://img.shields.io/github/release/uvejota/homeassistant-edata.svg)](https://github.com/uvejota/homeassistant-edata/releases/latest)
 [![Stable](https://img.shields.io/github/v/release/fxreina/homeassistant-meteocat.svg)](https://github.com/fxreina/homeassistant-meteocat/releases/latest)
 
 # homeassistant-meteocat
