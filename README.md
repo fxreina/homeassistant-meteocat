@@ -4,34 +4,36 @@
 # homeassistant-meteocat
 <a href="https://www.meteo.cat/" target="_blank"><img src="https://brands.home-assistant.io/meteocat/logo.png" alt="imagen" height="150"></a> <img src="assets/dades_obertes.png" alt="imagen" height="150">
 
-Esta integración para Home Assistant te permite integrar la previsión meteorológica emitida por Meteocat (la agencia meteorológica local de Catalunya) a través del portal de datos abiertos de la Generalitat de Catalunya. Concretamente, se consulta el servicio https://static-m.meteo.cat/content/opendata/ctermini_comarcal.xml que proporciona la previsión meteorológica por comarcas para los próximos dos días (el día en curso == hoy y el siguiente == mañana).
+This integration for Home Assistant allows you to incorporate the weather forecast provided by Meteocat (the local meteorological agency of Catalonia) through the open data portal of the Generalitat de Catalunya. Specifically, it queries the service https://static-m.meteo.cat/content/opendata/ctermini_comarcal.xml, which provides the regional weather forecast for the next two days (the current day == today and the following day == tomorrow).
 
-La integración está todavía en desarrollo y no está lista para su uso productivo.
+The integration is still under development and is not ready for productive use.
 
-## Índice de contenidos
+## Table of Contents
 
 1. [Ejemplo de Dashboard](#Ejemplo-de-Dashboard)<br>
-2. [Instalación](#Instalación)<br>
+2. [Installation](#Installation)<br>
+4. [Quick Start](#Quick-Start)<br>
 3. [FAQ](#FAQ)
 
-## Ejemplo de Dashboard
+## Installation
 
-![Dashboard](assets/dashboard.png)
+1. Copy contents of custom_components/meteocat/ to custom_components/meteocat/ in your Home Assistant config folder.
+4. Restart Home Assistant from "Developer Tools / Yaml / Check and Restart / Restart"
+5. Get into "Settings / Devices and Services / Integrations / Add integration".
+6. Find the "Meteocat" custom integration and install it.
 
-## Instalación
+Configuration:
 
-1. Accede a la carpeta de config de tu home assistant.
-2. Crea la carpeta "custom_components/meteocat"
-3. Copia el contenido del repositorio en esa carpeta.
-4. Reinicia home assistant desde "Developer Tools / Yaml / Check and Restart / Restart"
-5. Accede a "Settings / Devices and Services / Integrations / Add integration.
-6. Localiza la integración de "Meteocat".
-
-Configuración:
-
-Selecciona la comarca para la que quieres recibir la previsión meteorológica:
+Select the region (Comarca) for which you want to receive the weather forecast.
 
 ![imagen](assets/select_region.png)
+
+## Installation using HACS
+[HACS](https://github.com/custom-components/hacs) is a community store for Home Assistant. Although it is planned to solve this in future, for the time being you CANNOT install yet this Meteocat integration from the HACS store.
+
+## Quick Start
+This custom component creates:
+xxx
 
 ## FAQ
 
