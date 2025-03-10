@@ -10,7 +10,7 @@ The integration is still under development and is not ready for productive use.
 
 ## Table of Contents
 
-1. [Ejemplo de Dashboard](#Ejemplo-de-Dashboard)<br>
+1. [Dashboard Example](#Dashboard-Example)<br>
 2. [Installation](#Installation)<br>
 4. [Quick Start](#Quick-Start)<br>
 3. [FAQ](#FAQ)
