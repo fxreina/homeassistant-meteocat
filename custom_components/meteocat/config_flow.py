@@ -49,8 +49,9 @@ class MeteocatOptionsFlowHandler(config_entries.OptionsFlow):
 
     def __init__(self, config_entry):
         """Initialize options flow."""
-        self.config_entry = config_entry
-
+        # Remove direct assignment of self.config_entry (deprecated)
+        self.options = dict(config_entry.options)
+        
     async def async_step_init(self, user_input=None):
         """Manage the options for the custom integration."""
         errors = {}
@@ -65,10 +66,13 @@ class MeteocatOptionsFlowHandler(config_entries.OptionsFlow):
 #                        "text": {}
 #                    }
 #                )
-                vol.Required("location"): selector(
+                vol.Required(
+                    "location",
+                    default=self.options.get("location", "")  # Use self.options instead of config_entry.data
+                ): selector(
                     {
                         "select": {
-                            "Choose the region": [
+                            "options": [
                                 {"value": code, "label": description} for code, description in REGIONS
                             ]
                         }
