@@ -7,7 +7,7 @@
     "codeowners": ["@fxreina"],
     "requirements": [],
     "dependencies": [],
-	"homeassistant": "2024.1.0",
+    "min_hass_version": "2024.1.0",
     "config_flow": true,
-	"iot_class": "cloud_polling"
+    "iot_class": "cloud_polling"
 }
