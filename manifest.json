@@ -1,0 +1,12 @@
+{
+    "domain": "meteocat",
+    "name": "Meteocat",
+    "codeowners": ["@fxreina"],
+    "config_flow": true,
+    "dependencies": [],
+    "documentation": "https://github.com/fxreina/homeassistant-meteocat",
+	"iot_class": "cloud_polling",
+    "issue_tracker": "https://github.com/fxreina/homeassistant-meteocat/issues",
+    "requirements": [],
+	"version": "0.0.1"
+}
