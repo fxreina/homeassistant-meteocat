@@ -1,0 +1,19 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Meteocat integration",
+        "description": "Select the region for which you want the forecast.",
+        "data": {
+          "location": "Region",
+          "api_key": "API Key",
+          "region": "Region"
+        }
+      }
+    },
+    "error": {
+      "invalid_api": "Invalid API Key"
+    }
+  },
+  "title": "My Custom Integration"
+}
