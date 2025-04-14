@@ -27,7 +27,11 @@ class MeteocatConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             {
                 vol.Required("location"): selector(
                     {
-                        "text": {}
+                        "select": {
+                            "options": [
+                                {"value": code, "label": description} for code, description in REGIONS
+                            ]
+                        }
                     }
                 )
             }
@@ -57,28 +61,20 @@ class MeteocatOptionsFlowHandler(config_entries.OptionsFlow):
         errors = {}
 
         if user_input is not None:
+            # Save the user input (update interval) in the options
             return self.async_create_entry(title="", data=user_input)
 
         schema = vol.Schema(
             {
-#                vol.Required("location", default=self.config_entry.data.get("location")): selector(
-#                    {
-#                        "text": {}
-#                    }
-#                )
                 vol.Required(
-                    "location",
-                    default=self.options.get("location", "")  # Use self.options instead of config_entry.data
-                ): selector(
-                    {
-                        "select": {
-                            "options": [
-                                {"value": code, "label": description} for code, description in REGIONS
-                            ]
-                        }
-                    }
-                )
+                    "update_interval",
+                    default=self.options.get("update_interval", 60)  # Default to 60 minutes if not set
+                ): vol.All(int, vol.Range(min=1, max=1440))  # Enforce a range of 1 to 1440 minutes
             }
         )
 
-        return self.async_show_form(step_id="init", data_schema=schema, errors=errors)
+        return self.async_show_form(
+            step_id="init", 
+            data_schema=schema, 
+            errors=errors,
+        )
