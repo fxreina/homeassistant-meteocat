@@ -9,5 +9,5 @@
     "issue_tracker": "https://github.com/fxreina/homeassistant-meteocat/issues",
     "requirements": [],
     "version": "0.0.3",
-    "integration_type": "service",
+    "integration_type": "service"
 }
