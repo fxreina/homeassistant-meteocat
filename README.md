@@ -10,10 +10,9 @@ The integration is still under development and is not ready for productive use.
 
 ## Table of Contents
 
-1. [Dashboard Example](#Dashboard-Example)<br>
-2. [Installation](#Installation)<br>
-3. [Quick Start](#Quick-Start)<br>
-4. [Examples](#Examples)<br>
+1. [Installation](#Installation)<br>
+2. [Quick Start](#Quick-Start)<br>
+3. [Examples](#Examples)<br>
 
 ## Installation
 
@@ -28,7 +27,7 @@ Select the region (Comarca) for which you want to receive the weather forecast.
 
 ![imagen](assets/select_region.png)
 
-## Installation using HACS
+### Installation using HACS
 [HACS](https://github.com/custom-components/hacs) is a community store for Home Assistant. Although it is planned to solve this in future, for the time being you CANNOT install yet this Meteocat integration from the HACS store.
 
 ## Quick Start
