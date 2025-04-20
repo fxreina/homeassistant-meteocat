@@ -12,8 +12,8 @@ The integration is still under development and is not ready for productive use.
 
 1. [Dashboard Example](#Dashboard-Example)<br>
 2. [Installation](#Installation)<br>
-4. [Quick Start](#Quick-Start)<br>
-3. [FAQ](#FAQ)
+3. [Quick Start](#Quick-Start)<br>
+4. [Examples](#Examples)<br>
 
 ## Installation
 
@@ -40,8 +40,84 @@ Each sensor will have attributes showing the max and min forecasted temperatures
 
 <img src="assets/attributes.png" alt="imagen">
 
-## FAQ
+## Examples
 
-**xxx**
+### Using a custom button card
+Showing in this case next available forecast, that can be either today's forecast or tomorrow's. Meteocat pubishes today's forecast as day1 until noon, then day1 will shift to be tomorrow.
+  
+<img src="assets/card1.png" alt="imagen">
+
+```yaml
+type: custom:button-card
+entity: sensor.meteocat_forecast_pallars_jussa_tomorrow
+show_icon: false
+show_state: false
+show_label: true
+show_name: false
+name: null
+label: Previssió per demà
+styles:
+  card:
+    - padding: 3%
+    - height: 200px
+  state:
+    - font-weight: bold
+    - font-size: 22px
+  label:
+    - align-self: middle
+    - justify-self: left
+  grid:
+    - grid-template-areas: |
+        "l trange"
+        "moricon afticon"
+        "mprecip tprecip"
+    - grid-template-columns: 50% 50%
+    - grid-template-rows: 25% 50% 5%
+custom_fields:
+  trange: |
+    [[[
+      const minTemp = states['sensor.meteocat_forecast_pallars_jussa_tomorrow'].attributes.min_temp;
+      const maxTemp = states['sensor.meteocat_forecast_pallars_jussa_tomorrow'].attributes.max_temp;
+      return `
+      <ha-icon icon="mdi:thermometer" style="width: 20px; height: 20px; color: deepskyblue;"></ha-icon>
+      <span style="color: var(--text-color-sensor);">${minTemp} ºC - </span>
+      <ha-icon icon="mdi:thermometer" style="width: 20px; height: 20px; color: red;"></ha-icon>
+      <span style="color: var(--text-color-sensor);">${maxTemp} ºC</span>
+      `;    ]]]
+  mprecip: |
+    [[[
+      const morPrecip = states['sensor.meteocat_forecast_pallars_jussa_tomorrow'].attributes.morning_precip;
+      return `<ha-icon icon="mdi:weather-rainy" style="width: 20px; height: 20px; color: blue;"></ha-icon>
+      <span style="color: var(--text-color-sensor);">${morPrecip}</span>`;
+    ]]]  
+  tprecip: |
+    [[[
+      const aftPrecip = states['sensor.meteocat_forecast_pallars_jussa_tomorrow'].attributes.afternoon_precip;
+      return `<ha-icon icon="mdi:weather-rainy" style="width: 20px; height: 20px; color: darkred;"></ha-icon>
+      <span style="color: var(--text-color-sensor);">${aftPrecip}</span>`;
+    ]]]  
+  moricon: |
+    [[[
+      const iconMorning = states['sensor.meteocat_forecast_pallars_jussa_tomorrow'].attributes.icon_morning;
+      return iconMorning ? `
+        <div style="text-align: center;">
+          <div style="font-size: 16px; margin-top: 8px; margin-bottom: 4px;">Matí</div>
+          <img src="${iconMorning}" style="height: 80px;" alt="Matí">
+        </div>` : '';
+    ]]]
+  afticon: |
+    [[[
+      const iconAfternoon = states['sensor.meteocat_forecast_pallars_jussa_tomorrow'].attributes.icon_afternoon;
+      return iconAfternoon ? `
+          <div style="text-align: center;">
+          <div style="font-size: 16px; margin-top: 8px; margin-bottom: 4px;">Tarda</div>
+          <img src="${iconAfternoon}" style="height: 80px;" alt="Tarda">
+        </div>` : '';
+    ]]]
+
+  
+  
+  
+  ```
 
 > xxx.
