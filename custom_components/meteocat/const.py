@@ -77,7 +77,7 @@ FORECAST_MAPPING = {
     "29": "xàfec",
     "30": "aiguaneu",
     "31": "ruixat",
-    "32": "plugim",
+    "32": "plugim",   
 }
 
 PRECIPITATION_MAPPING = {

@@ -33,7 +33,7 @@ class MeteocatSensor(SensorEntity):
         """Initialize the sensor."""
         self._region_id = str(region_id)
         self._day = day
-        self._day_name = "Today" if day == 1 else "Tomorrow"
+        self._day_name = "Day1" if day == 1 else "Day2"
          # Get location name from REGIONS
         location_name = next((name for id, name in REGIONS if id == self._region_id), f"Region {self._region_id}")
          # Normalize name (remove accents, convert spaces to underscores, and lowercase)
@@ -58,12 +58,6 @@ class MeteocatSensor(SensorEntity):
     def extra_state_attributes(self):
         """Return the state attributes."""
         return self._attributes
-
-    @property
-    def unit_of_measurement(self):
-        """Return the unit of measurement."""
-#       return TEMP_CELSIUS
-#       return UnitOfTemperature.CELSIUS
 
     async def async_update(self):
         """Fetch new state data for the sensor."""
@@ -97,6 +91,9 @@ class MeteocatSensor(SensorEntity):
                      # Extract weather symbols and remove ".png"
                     morningforecast = variable.get("simbolmati", "").replace(".png", "")
                     afternoonforecast = variable.get("simboltarda", "").replace(".png", "")
+                    icon_morning = f"https://static-m.meteo.cat/assets-w3/images/meteors/estatcel/{morningforecast}.svg" if morningforecast else None
+                    icon_afternoon = f"https://static-m.meteo.cat/assets-w3/images/meteors/estatcel/{afternoonforecast}.svg" if afternoonforecast else None
+                    
                      # Get descriptions from FORECAST_MAPPING (default to empty string if not found)
                     desc_morning = FORECAST_MAPPING.get(morningforecast, "").capitalize()
                     desc_afternoon = FORECAST_MAPPING.get(afternoonforecast, "").capitalize()                    
@@ -113,12 +110,15 @@ class MeteocatSensor(SensorEntity):
                     self._attributes = {
                         "min_temp": variable.get("tempmin"),
                         "max_temp": variable.get("tempmax"),
+                        "date": variable.get("data"),
                         "morning_precip": precipitation_morning,
                         "morning_intensity": variable.get("intensitatprecimati"),
                         "morning_accum": variable.get("precipitacioacumuladamati"),
                         "afternoon_precip": precipitation_afternoon,
                         "afternoon_intensity": variable.get("intensitatprecitarda"),
                         "afternoon_accum": variable.get("precipitacioacumuladatarda"),
+                        "icon_morning": icon_morning,
+                        "icon_afternoon": icon_afternoon,
                 }
             else:
                 _LOGGER.warning("No forecast available for day %s in region %s", self._day, self._region_id)

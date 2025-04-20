@@ -5,10 +5,10 @@ from homeassistant import config_entries
 from homeassistant.core import callback
 from homeassistant.helpers.selector import selector
 
-from .const import DOMAIN
-from .const import REGIONS
+from .const import DOMAIN, REGIONS
 
 _LOGGER = logging.getLogger(__name__)
+
 
 class MeteocatConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     """Handle a config flow for Meteocat integration."""
@@ -22,14 +22,14 @@ class MeteocatConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         if user_input is not None:
             return self.async_create_entry(title=user_input["location"], data=user_input)
 
-        # Define the user interface form schema
         schema = vol.Schema(
             {
                 vol.Required("location"): selector(
                     {
                         "select": {
                             "options": [
-                                {"value": code, "label": description} for code, description in REGIONS
+                                {"value": code, "label": description}
+                                for code, description in REGIONS
                             ]
                         }
                     }
@@ -41,9 +41,7 @@ class MeteocatConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             step_id="user", data_schema=schema, errors=errors
         )
 
-    @staticmethod
-    @callback
-    def async_get_options_flow(config_entry):
+    def async_get_options_flow(self, config_entry):
         """Return the options flow handler."""
         return MeteocatOptionsFlowHandler(config_entry)
 
@@ -53,28 +51,27 @@ class MeteocatOptionsFlowHandler(config_entries.OptionsFlow):
 
     def __init__(self, config_entry):
         """Initialize options flow."""
-        # Remove direct assignment of self.config_entry (deprecated)
+        self.config_entry = config_entry
         self.options = dict(config_entry.options)
-        
+
     async def async_step_init(self, user_input=None):
         """Manage the options for the custom integration."""
         errors = {}
 
         if user_input is not None:
-            # Save the user input (update interval) in the options
             return self.async_create_entry(title="", data=user_input)
 
         schema = vol.Schema(
             {
                 vol.Required(
                     "update_interval",
-                    default=self.options.get("update_interval", 60)  # Default to 60 minutes if not set
-                ): vol.All(int, vol.Range(min=1, max=1440))  # Enforce a range of 1 to 1440 minutes
+                    default=self.options.get("update_interval", 60)
+                ): vol.All(int, vol.Range(min=1, max=1440))
             }
         )
 
         return self.async_show_form(
-            step_id="init", 
-            data_schema=schema, 
+            step_id="init",
+            data_schema=schema,
             errors=errors,
         )
