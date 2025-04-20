@@ -48,13 +48,13 @@ Showing in this case next available forecast, that can be either today's forecas
 
 ```yaml
 type: custom:button-card
-entity: sensor.meteocat_forecast_pallars_jussa_tomorrow
+entity: sensor.meteocat_forecast_valles_occidental_day1
 show_icon: false
 show_state: false
-show_label: true
+show_label: false
 show_name: false
 name: null
-label: Previssió per demà
+label: Propera previssió
 styles:
   card:
     - padding: 3%
@@ -67,7 +67,7 @@ styles:
     - justify-self: left
   grid:
     - grid-template-areas: |
-        "l trange"
+        "daylabel trange"
         "moricon afticon"
         "mprecip tprecip"
     - grid-template-columns: 50% 50%
@@ -75,8 +75,8 @@ styles:
 custom_fields:
   trange: |
     [[[
-      const minTemp = states['sensor.meteocat_forecast_pallars_jussa_tomorrow'].attributes.min_temp;
-      const maxTemp = states['sensor.meteocat_forecast_pallars_jussa_tomorrow'].attributes.max_temp;
+      const minTemp = states['sensor.meteocat_forecast_valles_occidental_day1'].attributes.min_temp;
+      const maxTemp = states['sensor.meteocat_forecast_valles_occidental_day1'].attributes.max_temp;
       return `
       <ha-icon icon="mdi:thermometer" style="width: 20px; height: 20px; color: deepskyblue;"></ha-icon>
       <span style="color: var(--text-color-sensor);">${minTemp} ºC - </span>
@@ -85,19 +85,19 @@ custom_fields:
       `;    ]]]
   mprecip: |
     [[[
-      const morPrecip = states['sensor.meteocat_forecast_pallars_jussa_tomorrow'].attributes.morning_precip;
+        const morPrecip = states['sensor.meteocat_forecast_valles_occidental_day1'].attributes.morning_precip;
       return `<ha-icon icon="mdi:weather-rainy" style="width: 20px; height: 20px; color: blue;"></ha-icon>
       <span style="color: var(--text-color-sensor);">${morPrecip}</span>`;
     ]]]  
   tprecip: |
     [[[
-      const aftPrecip = states['sensor.meteocat_forecast_pallars_jussa_tomorrow'].attributes.afternoon_precip;
+      const aftPrecip = states['sensor.meteocat_forecast_valles_occidental_day1'].attributes.afternoon_precip;
       return `<ha-icon icon="mdi:weather-rainy" style="width: 20px; height: 20px; color: darkred;"></ha-icon>
       <span style="color: var(--text-color-sensor);">${aftPrecip}</span>`;
     ]]]  
   moricon: |
     [[[
-      const iconMorning = states['sensor.meteocat_forecast_pallars_jussa_tomorrow'].attributes.icon_morning;
+      const iconMorning = states['sensor.meteocat_forecast_valles_occidental_day1'].attributes.icon_morning;
       return iconMorning ? `
         <div style="text-align: center;">
           <div style="font-size: 16px; margin-top: 8px; margin-bottom: 4px;">Matí</div>
@@ -106,17 +106,24 @@ custom_fields:
     ]]]
   afticon: |
     [[[
-      const iconAfternoon = states['sensor.meteocat_forecast_pallars_jussa_tomorrow'].attributes.icon_afternoon;
+      const iconAfternoon = states['sensor.meteocat_forecast_valles_occidental_day1'].attributes.icon_afternoon;
       return iconAfternoon ? `
           <div style="text-align: center;">
           <div style="font-size: 16px; margin-top: 8px; margin-bottom: 4px;">Tarda</div>
           <img src="${iconAfternoon}" style="height: 80px;" alt="Tarda">
         </div>` : '';
     ]]]
-
-  
-  
-  
+  daylabel: |
+    [[[
+      const dateStr = states['sensor.meteocat_forecast_valles_occidental_day1'].attributes.date;
+      const forecastDate = new Date(dateStr);
+      const today = new Date();
+      // Normalize both dates to midnight to ignore time
+      forecastDate.setHours(0, 0, 0, 0);
+      today.setHours(0, 0, 0, 0);
+      const label = forecastDate.getTime() === today.getTime() ? "Previsió per avui" : "Previssió per demà";
+      return `<div style="text-align:center; font-size: 16px; font-weight: bold; color: var(--primary-text-color);">${label}</div>`;
+    ]]]
   ```
 
 > xxx.
