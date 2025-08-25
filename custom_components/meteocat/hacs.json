@@ -1,7 +1,0 @@
-{
-  "name": "Meteocat Forecast",
-  "domains": ["meteocat"],
-  "homeassistant": "2023.0.0",
-  "iot_class": "cloud_polling",
-  "render_readme": true
-}
